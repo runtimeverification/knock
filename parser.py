@@ -66,12 +66,29 @@ def takeList(s, mems_parser=None):
     return (res, s)
 
 
+def associate_right(l):
+    """Take a list of atoms and lists, and associate all the elements in it to the right, recursively.
+    For example:
+    [1 2 3 4] => [1 [2 [3 4]]]
+    [[1 2] 3 4] => [[1 2] [3 4]]
+    [[1 2 3] 4] => [[1 [2 3]] 4]
+    """
+    if not isinstance(l, list):
+        return l
+    if len(l) == 1:
+        return l[0]
+    if len(l) == 2:
+        return l
+    return [associate_right(l[0]), associate_right(l[1:])]
+
+
 inp_file = sys.argv[1]
 with open(inp_file) as f:
     inp = f.read()
 (res, s) = takeList(inp, mems_parser=orParser(takeInt, takeSymb))
 if not s == '':
     print("Parse error:\nresult so far: %s\nremaining: %s", (res, s))
+res = associate_right(res)
 res = str(res).replace(',', '')  # we don't use commas to separate list items in nock.
 res = str(res).replace('\'', '') # remove string quotes.
 print(res)
