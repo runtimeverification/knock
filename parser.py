@@ -6,6 +6,7 @@ def strip(s):
         s = s[1:]
     return s
 
+
 def orParser(p1, p2):
     """Create a parser that accepts one of two parsers"""
     def parse(s):
@@ -18,6 +19,8 @@ def orParser(p1, p2):
 
 
 def takeSymb(s):
+    """Just a little hack for quick analysis: we allow the symbols "subject"
+    and "a", "b", "c", and "d". """
     s = strip(s)
     if len(s) > 7 and s[0:7] == 'subject':
         return ('subject', strip(s[7:]))
