@@ -22,21 +22,35 @@ module NOCK-ABSTRACT-SYNTAX
                   | "+" Nock   [strict]
                   | "=" Nock   [strict]
                   | "/" Nock   [strict]
+                  | "#" Nock   [strict]
                   | "*" Nock   [strict]
                   | "Bottom"
 
     // Sugar for writing rules.
-    syntax Noun ::= "[" Noun Noun Noun "]"                      [macro]
-                  | "[" Noun Noun Noun Noun "]"                 [macro]
-                  | "[" Noun Noun Noun Noun Noun "]"            [macro]
-                  | "[" Noun Noun Noun Noun Noun Noun "]"       [macro]
-                  | "[" Noun Noun Noun Noun Noun Noun Noun "]"  [macro]
- // -------------------------------------------------------------------
-    rule [ N1 N2 N3             ] => [ N1 [ N2 N3             ] ]
-    rule [ N1 N2 N3 N4          ] => [ N1 [ N2 N3 N4          ] ]
-    rule [ N1 N2 N3 N4 N5       ] => [ N1 [ N2 N3 N4 N5       ] ]
-    rule [ N1 N2 N3 N4 N5 N6    ] => [ N1 [ N2 N3 N4 N5 N6    ] ]
-    rule [ N1 N2 N3 N4 N5 N6 N7 ] => [ N1 [ N2 N3 N4 N5 N6 N7 ] ]
+    // This only helps with rule-writing.
+    // Program input still needs to be properly associated, i.e. [1 [2 3]] not [1 2 3].
+    syntax Noun ::= "[" Noun Noun Noun "]"                      [macro-rec, prefer]
+                  | "[" Noun Noun Noun Noun "]"                 [macro-rec, prefer]
+                  | "[" Noun Noun Noun Noun Noun "]"            [macro-rec, prefer]
+                  | "[" Noun Noun Noun Noun Noun Noun "]"       [macro-rec, prefer]
+                  | "[" Noun Noun Noun Noun Noun Noun Noun "]"  [macro-rec, prefer]
+    syntax Nock ::= "[" Nock Nock Nock "]"                      [macro-rec]
+                  | "[" Nock Nock Nock Nock "]"                 [macro-rec]
+                  | "[" Nock Nock Nock Nock Nock "]"            [macro-rec]
+                  | "[" Nock Nock Nock Nock Nock Nock "]"       [macro-rec]
+                  | "[" Nock Nock Nock Nock Nock Nock Nock "]"  [macro-rec]
+ // -----------------------------------------------------------------------
+    rule [ N1 N2 N3             ]:Noun => [ N1 [ N2 N3             ] ]
+    rule [ N1 N2 N3 N4          ]:Noun => [ N1 [ N2 N3 N4          ] ]
+    rule [ N1 N2 N3 N4 N5       ]:Noun => [ N1 [ N2 N3 N4 N5       ] ]
+    rule [ N1 N2 N3 N4 N5 N6    ]:Noun => [ N1 [ N2 N3 N4 N5 N6    ] ]
+    rule [ N1 N2 N3 N4 N5 N6 N7 ]:Noun => [ N1 [ N2 N3 N4 N5 N6 N7 ] ]
+
+    rule [ N1 N2 N3             ]:Nock => [ N1 [ N2 N3             ] ]
+    rule [ N1 N2 N3 N4          ]:Nock => [ N1 [ N2 N3 N4          ] ]
+    rule [ N1 N2 N3 N4 N5       ]:Nock => [ N1 [ N2 N3 N4 N5       ] ]
+    rule [ N1 N2 N3 N4 N5 N6    ]:Nock => [ N1 [ N2 N3 N4 N5 N6    ] ]
+    rule [ N1 N2 N3 N4 N5 N6 N7 ]:Nock => [ N1 [ N2 N3 N4 N5 N6 N7 ] ]
 
 endmodule
 
