@@ -74,7 +74,7 @@ module NOCK
     rule /[1 A]:Noun       => A [priority(50)]
     rule /[2  A _B]:Noun   => A [priority(50)]
     rule /[3 _A  B]:Noun   => B [priority(50)]
-    rule /[A' :Int B]:Noun => /[2 /[A'  /Int 2 B]] requires A' modInt 2  ==Int 0 [priority(51)]
+    rule /[A' :Int B]:Noun => /[2 /[A'  /Int 2 B]] requires A'  modInt 2  ==Int 0 [priority(51)]
     rule /[A'':Int B]:Noun => /[3 /[A'' /Int 2 B]] requires A'' modInt 2 =/=Int 0 [priority(51)]
     rule /_A:Noun          => Bottom [owise]
 
