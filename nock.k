@@ -19,8 +19,10 @@ module NOCK-ABSTRACT-SYNTAX
 
     syntax Nock ::= nock(Nock)
     syntax Nock ::= "wut" Nock [strict] // ? has significance in K, so we must replace it.
+                  | "+" Nock   [strict]
                   | "/" Nock   [strict]
                   | "*" Nock   [strict]
+                  | "Bottom"
 
     // Sugar for writing rules.
     syntax Noun ::= "[" Noun Noun Noun "]"                      [macro]
@@ -49,8 +51,11 @@ module NOCK
     rule nock(A) => *A                [priority(1)]
     rule wut [_A _B]:Noun => 0        [priority(5)]
     rule wut _A:Noun      => 1        [priority(6)]
+    rule +[_A _B]:Noun    => Bottom   [priority(7)]
+    rule +A:Int           => A +Int 1 [priority(8)]
 
     rule * [_A 1 B]:Noun => B
     rule * [ A 3 B]:Noun => wut *[A B]
+    rule * [_A 4 B]:Noun => +B
 
 endmodule
