@@ -23,12 +23,12 @@ module NOCK-ABSTRACT-SYNTAX
                   | "*" Nock   [strict]
 
     // Sugar for writing rules.
-    syntax Nock ::= "[" Nock Nock Nock "]"                      [macro]
-                  | "[" Nock Nock Nock Nock "]"                 [macro]
-                  | "[" Nock Nock Nock Nock Nock "]"            [macro]
-                  | "[" Nock Nock Nock Nock Nock Nock "]"       [macro]
-                  | "[" Nock Nock Nock Nock Nock Nock Nock "]"  [macro]
- // ----------------------------------------------------------
+    syntax Noun ::= "[" Noun Noun Noun "]"                      [macro]
+                  | "[" Noun Noun Noun Noun "]"                 [macro]
+                  | "[" Noun Noun Noun Noun Noun "]"            [macro]
+                  | "[" Noun Noun Noun Noun Noun Noun "]"       [macro]
+                  | "[" Noun Noun Noun Noun Noun Noun Noun "]"  [macro]
+ // -------------------------------------------------------------------
     rule [ N1 N2 N3             ] => [ N1 [ N2 N3             ] ]
     rule [ N1 N2 N3 N4          ] => [ N1 [ N2 N3 N4          ] ]
     rule [ N1 N2 N3 N4 N5       ] => [ N1 [ N2 N3 N4 N5       ] ]
@@ -39,17 +39,18 @@ endmodule
 
 module NOCK
     import NOCK-SYNTAX
+    import INT
 
     configuration <k> nock($PGM:Nock) </k>
 
     // When a nock tree has been fully evaluated, it is a noun.
     rule [ NN:Noun NN':Noun]::Nock => [ NN NN']::Noun
 
-    rule nock(A) => *A  [priority(51)]
-    rule wut [_A _B]:Noun => 0    [priority(55)]
-    rule wut _A:Noun      => 1    [priority(56)]
+    rule nock(A) => *A                [priority(1)]
+    rule wut [_A _B]:Noun => 0        [priority(5)]
+    rule wut _A:Noun      => 1        [priority(6)]
 
-    rule * [_A [1 B]]:Noun => B
-    rule * [A [3 B]]:Noun => wut *[A B]
+    rule * [_A 1 B]:Noun => B
+    rule * [ A 3 B]:Noun => wut *[A B]
 
 endmodule
