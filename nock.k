@@ -57,12 +57,12 @@ module NOCK
     rule =[ A  A]:Noun    => 0 [priority(50)]
     rule =[_A _B]:Noun    => 1 [priority(51)]
 
-    rule /[1 A]:Noun         => A [priority(50)]
-    rule /[2  A _B]:Noun     => A [priority(50)]
-    rule /[3 _A  B]:Noun     => B [priority(50)]
-    rule /[A_LUS:Int B]:Noun => /[2 /[A_LUS /Int 2 B]] requires A_LUS modInt 2  ==Int 0 [priority(51)]
-    rule /[A_LUS:Int B]:Noun => /[3 /[A_LUS /Int 2 B]] requires A_LUS modInt 2 =/=Int 0 [priority(51)]
-    rule /_A:Noun            => Bottom [owise]
+    rule /[1 A]:Noun       => A [priority(50)]
+    rule /[2  A _B]:Noun   => A [priority(50)]
+    rule /[3 _A  B]:Noun   => B [priority(50)]
+    rule /[A' :Int B]:Noun => /[2 /[A'  /Int 2 B]] requires A' modInt 2  ==Int 0 [priority(51)]
+    rule /[A'':Int B]:Noun => /[3 /[A'' /Int 2 B]] requires A'' modInt 2 =/=Int 0 [priority(51)]
+    rule /_A:Noun          => Bottom [owise]
 
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
