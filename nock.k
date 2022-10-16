@@ -57,12 +57,28 @@ module NOCK
     rule =[ A  A]:Noun    => 0 [priority(50)]
     rule =[_A _B]:Noun    => 1 [priority(51)]
 
+    rule /[1 A]:Noun         => A [priority(50)]
+    rule /[2  A _B]:Noun     => A [priority(50)]
+    rule /[3 _A  B]:Noun     => B [priority(50)]
+    rule /[A_LUS:Int B]:Noun => /[2 /[A_LUS /Int 2 B]] requires A_LUS modInt 2  ==Int 0 [priority(51)]
+    rule /[A_LUS:Int B]:Noun => /[3 /[A_LUS /Int 2 B]] requires A_LUS modInt 2 =/=Int 0 [priority(51)]
+    rule /_A:Noun            => Bottom [owise]
+
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
+    rule *[ A 0 B]:Noun   => /[B A]
     rule *[_A 1 B]:Noun   => B
     rule *[ A 2 B C]:Noun => *[*[A B] *[A C]]
     rule *[ A 3 B]:Noun   => wut *[A B]
     rule *[_A 4 B]:Noun   => +B
     rule *[ A 5 B C]:Noun => =[*[A B] *[A C]]
+
+    // Derived rules
+    // The rules for / lead to an infinite loop.
+    // /[2 a] = /[(1 + 1)     a] => /[2 /[1 a]] => /[2 a] => ...
+    // /[3 a] = /[(1 + 1 + 1) a] => /[3 /[1 a]] => /[3 a] => ...
+    // Note that the rules for /[2 A B] and /[3 A B] do *not* apply, not even in the writte nock spec.
+    rule /[2 _A:Int] => Bottom
+    rule /[3 _A:Int] => Bottom
 
 endmodule
