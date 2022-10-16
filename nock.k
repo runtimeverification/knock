@@ -54,6 +54,8 @@ module NOCK
     rule +[_A _B]:Noun    => Bottom   [priority(7)]
     rule +A:Int           => A +Int 1 [priority(8)]
 
+    rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
+
     rule *[_A 1 B]:Noun => B
     rule *[ A 3 B]:Noun => wut *[A B]
     rule *[_A 4 B]:Noun => +B
