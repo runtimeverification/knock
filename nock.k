@@ -1,30 +1,24 @@
 module NOCK-SYNTAX
-    import NOCK-CONCRETE-ONLY-SYNTAX
-endmodule
+    import BOOL
+    import INT-SYNTAX
 
-module NOCK-CONCRETE-ONLY-SYNTAX
-    import NOCK-BASE-SYNTAX
+    syntax Nock ::= Noun | "[" Nock Nock "]" [seqstrict]
 
- // I think this is a dead end. Just write a pre-parser and post-parser in Python
-    syntax NockList ::= NeList{Nock, " "}
-    syntax Nock ::= "[" NockList "]" [macro]
- // --------------------------------
-    rule [ N1 .NockList ] => N1
-    rule [ N1 NS:NockList ] => [ N1 NS ]
+    syntax Noun ::= Int | "[" Noun Noun "]" [prefer]
+    syntax KResult ::= Noun
 
     // For quick "symbolic" execution, placeholders
     syntax Nock ::= "subject" | "a" | "b" | "c" | "d"
 
+    // Test: use these as targets for "a" and "b"
+    // This way we can check that the "nock-to-noun" rule below works.
+    syntax Noun ::= "x" | "y"
+
 endmodule
 
-module NOCK-BASE-SYNTAX
-    import INT-SYNTAX
-
-    syntax Nock ::= Int | "[" Nock Nock "]" [prefer]
-endmodule
 
 module NOCK-ABSTRACT-SYNTAX
-    import NOCK-BASE-SYNTAX
+    import NOCK-SYNTAX
 
     syntax Nock ::= nock(Nock)
     syntax Nock ::= "*" Nock
@@ -42,6 +36,18 @@ module NOCK-ABSTRACT-SYNTAX
     rule [ N1 N2 N3 N4 N5       ] => [ N1 [ N2 N3 N4 N5       ] ]
     rule [ N1 N2 N3 N4 N5 N6    ] => [ N1 [ N2 N3 N4 N5 N6    ] ]
     rule [ N1 N2 N3 N4 N5 N6 N7 ] => [ N1 [ N2 N3 N4 N5 N6 N7 ] ]
+
+endmodule
+
+module NOCK
+    import NOCK-SYNTAX
+
+    // When a nock tree has been fully evaluated, it is a noun.
+    rule [ NN:Noun NN':Noun]::Nock => [ NN NN']::Noun
+
+    // Test: Check that the "nock-to-noun" rule above works.
+    rule a => x
+    rule b => y
 
 endmodule
 
@@ -77,6 +83,3 @@ module NOCK-INSTANT
 
 endmodule
 
-module NOCK
-    import NOCK-INSTANT
-endmodule
