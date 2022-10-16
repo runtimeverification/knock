@@ -48,11 +48,11 @@ module NOCK
     // When a nock tree has been fully evaluated, it is a noun.
     rule [ NN:Noun NN':Noun]::Nock => [ NN NN']::Noun
 
-    rule nock(A) => *A                [priority(1)]
-    rule wut [_A _B]:Noun => 0        [priority(5)]
-    rule wut _A:Noun      => 1        [priority(6)]
-    rule +[_A _B]:Noun    => Bottom   [priority(7)]
-    rule +A:Int           => A +Int 1 [priority(8)]
+    rule nock(A) => *A
+    rule wut [_A _B]:Noun => 0
+    rule wut _A:Int       => 1
+    rule +[_A _B]:Noun    => Bottom
+    rule +A:Int           => A +Int 1
 
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
