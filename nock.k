@@ -28,7 +28,7 @@ module NOCK-ABSTRACT-SYNTAX
                   | "[" Nock Nock Nock Nock Nock "]"            [macro]
                   | "[" Nock Nock Nock Nock Nock Nock "]"       [macro]
                   | "[" Nock Nock Nock Nock Nock Nock Nock "]"  [macro]
- // ---------------------------------------------------------
+ // ----------------------------------------------------------
     rule [ N1 N2 N3             ] => [ N1 [ N2 N3             ] ]
     rule [ N1 N2 N3 N4          ] => [ N1 [ N2 N3 N4          ] ]
     rule [ N1 N2 N3 N4 N5       ] => [ N1 [ N2 N3 N4 N5       ] ]
