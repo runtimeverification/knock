@@ -10,3 +10,4 @@ TODO:
 - [x] syntax: remove list rules, keep macro rules for simpler rule writing.
 - [ ] ~~semantics: complete semantics with `anywhere` rules.~~
 - [ ] semantics: implement semantics with ordered evaluation (could perhaps just use `strict` on rules for `/, #, *, +` etc. with `KResult ::= BaseNock` and `BaseNock ::= Int | "[" BaseNock BaseNock "]"`.
+- [ ] set up a test harness for all our tests
