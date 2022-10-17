@@ -65,8 +65,8 @@ module NOCK
     rule [ NN:Noun NN':Noun]::Nock => [ NN NN']::Noun
 
     rule nock(A) => *A
-    rule wut [_A _B]:Noun => 0
-    rule wut _A:Int       => 1
+    rule wut [_A _B]:Noun => 0 [priority(50)]
+    rule wut _A:Noun      => 1 [priority(51)]
     rule +[_A _B]:Noun    => Bottom
     rule +A:Int           => A +Int 1
     rule =[ A  A]:Noun    => 0 [priority(50)]
