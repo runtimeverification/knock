@@ -87,7 +87,7 @@ with open(inp_file) as f:
     inp = f.read()
 (res, s) = takeList(inp, mems_parser=orParser(takeInt, takeSymb))
 if not s == '':
-    print("Parse error:\nresult so far: %s\nremaining: %s", (res, s))
+    print("Parse error:\nresult so far: %s\nremaining: %s" % (res, s))
 res = associate_right(res)
 res = str(res).replace(',', '')  # we don't use commas to separate list items in nock.
 res = str(res).replace('\'', '') # remove string quotes.
