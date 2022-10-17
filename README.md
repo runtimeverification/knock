@@ -2,7 +2,8 @@ K framework implementation of the [Nock virtual machine](https://developers.urbi
 
 ISSUES:
 
-- [ ] pre-parser fails for this program: [subject 3 [1 2]]
+- [ ] pre-parser fails for programs which already have right-association: [subject 3 [1 2]]
+- [ ] pre-parser fails for programs where the last element in a list is a special symbolic value: [a 6 b c d]
 
 TODO:
 
