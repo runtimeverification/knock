@@ -79,14 +79,20 @@ module NOCK
     rule /[A'':Int B]:Noun => /[3 /[A'' /Int 2 B]] requires A'' modInt 2 =/=Int 0 [priority(51)]
     rule /_A:Noun          => Bottom [owise]
 
+    rule #[1 A _B]:Noun    => A [priority(50)]
+    rule #[A' B C]:Noun    => #[A'  /Int 2 [B /[A' +Int 1 C]]  C] requires A'  modInt 2  ==Int 0 [priority(51)]
+    rule #[A'' B C]:Noun   => #[A'' /Int 2 [/[A'' -Int 1 C] B] C] requires A'' modInt 2 =/=Int 0 [priority(51)]
+    rule #A:Noun           => Bottom [owise] // TODO: Could this rule be removed? I can't think of a single way to reach this instruction. The hax Nock is always introduced by rule 10, which always gives two "arguments" in the tail. And we match on the first number being 1, or even, or odd. There are no more cases to be concerned with. The slot operator will reach Bottom in cases when the indicated location is not in the tree.
+
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
-    rule *[ A 0 B]:Noun   => /[B A]
-    rule *[_A 1 B]:Noun   => B
-    rule *[ A 2 B C]:Noun => *[*[A B] *[A C]]
-    rule *[ A 3 B]:Noun   => wut *[A B]
-    rule *[_A 4 B]:Noun   => +B
-    rule *[ A 5 B C]:Noun => =[*[A B] *[A C]]
+    rule *[ A 0  B]:Noun       => /[B A]
+    rule *[_A 1  B]:Noun       => B
+    rule *[ A 2  B C]:Noun     => *[*[A B] *[A C]]
+    rule *[ A 3  B]:Noun       => wut *[A B]
+    rule *[_A 4  B]:Noun       => +B
+    rule *[ A 5  B C]:Noun     => =[*[A B] *[A C]]
+    rule *[ A 10 [B C] D]:Noun => #[B *[A C] *[A D]]
 
     // Derived rules
     // The rules for / lead to an infinite loop.
