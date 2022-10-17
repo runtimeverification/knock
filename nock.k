@@ -62,7 +62,7 @@ module NOCK
     configuration <k> nock($PGM:Nock) </k>
 
     // When a nock tree has been fully evaluated, it is a noun.
-    rule [ NN:Noun NN':Noun]::Nock => [ NN NN']::Noun
+    rule [NN:Noun NN':Noun]::Nock => [NN NN']::Noun
 
     rule nock(A) => *A
     rule wut [_A _B]:Noun => 0 [priority(50)]
