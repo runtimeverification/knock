@@ -24,7 +24,7 @@ def takeSymb(s):
     s = strip(s)
     if len(s) > 7 and s[0:7] == 'subject':
         return ('subject', strip(s[7:]))
-    if len(s) > 1 and s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd':
+    if len(s) > 1 and (s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd'):
         return (s[0], strip(s[1]))
     return (None, s)
 
