@@ -22,10 +22,10 @@ def takeSymb(s):
     """Just a little hack for quick analysis: we allow the symbols "subject"
     and "a", "b", "c", and "d". """
     s = strip(s)
-    if len(s) > 7 and s[0:7] == 'subject':
+    if len(s) >= 7 and s[0:7] == 'subject':
         return ('subject', strip(s[7:]))
-    if len(s) > 1 and s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd':
-        return (s[0], strip(s[1]))
+    if len(s) >= 1 and (s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd'):
+        return (s[0], strip(s[1:]))
     return (None, s)
 
 
@@ -43,27 +43,29 @@ def takeInt(s):
     return (res, s)
 
 
-def takeList(s, mems_parser=None):
-    s = strip(s)
-    if len(s) > 0 and s[0] == '[':
-        res = []
-        s = s[1:]
-        while True:
-            (resTmp, s) = mems_parser(s)
-            if resTmp is None:
-                (lisRes, s) = takeList(s, mems_parser=mems_parser)
-                if lisRes is None:
-                    break
-                res.append(lisRes)
-            else:
-                res.append(resTmp)
-    else:
-        res = None
-    s = strip(s)
-    if len(s) > 0 and s[0] == ']':
-        s = strip(s[1:])
+def takeListOf(mems_parser):
+    def takeList(s):
+        s = strip(s)
+        if len(s) > 0 and s[0] == '[':
+            res = []
+            s = s[1:]
+            while True:
+                (resTmp, s) = mems_parser(s)
+                if resTmp is None:
+                    (lisRes, s) = takeList(s)
+                    if lisRes is None:
+                        break
+                    res.append(lisRes)
+                else:
+                    res.append(resTmp)
+        else:
+            res = None
+        s = strip(s)
+        if len(s) > 0 and s[0] == ']':
+            s = strip(s[1:])
 
-    return (res, s)
+        return (res, s)
+    return takeList
 
 
 def associate_right(l):
@@ -85,9 +87,11 @@ def associate_right(l):
 inp_file = sys.argv[1]
 with open(inp_file) as f:
     inp = f.read()
-(res, s) = takeList(inp, mems_parser=orParser(takeInt, takeSymb))
+leafParser = orParser(takeInt, takeSymb)
+listParser = takeListOf(leafParser)
+(res, s) = orParser(leafParser, listParser)(inp)
 if not s == '':
-    print("Parse error:\nresult so far: %s\nremaining: %s", (res, s))
+    print("Parse error:\nresult so far: %s\nremaining: %s" % (res, s))
 res = associate_right(res)
 res = str(res).replace(',', '')  # we don't use commas to separate list items in nock.
 res = str(res).replace('\'', '') # remove string quotes.
