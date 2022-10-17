@@ -86,12 +86,13 @@ module NOCK
 
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
-    rule *[ A 0  B]:Noun       => /[B A]
-    rule *[_A 1  B]:Noun       => B
-    rule *[ A 2  B C]:Noun     => *[*[A B] *[A C]]
-    rule *[ A 3  B]:Noun       => wut *[A B]
-    rule *[_A 4  B]:Noun       => +B
-    rule *[ A 5  B C]:Noun     => =[*[A B] *[A C]]
+    rule *[ A 0  B]:Noun   => /[B A]
+    rule *[_A 1  B]:Noun   => B
+    rule *[ A 2  B C]:Noun => *[*[A B] *[A C]]
+    rule *[ A 3  B]:Noun   => wut *[A B]
+    rule *[_A 4  B]:Noun   => +B
+    rule *[ A 5  B C]:Noun => =[*[A B] *[A C]]
+
     rule *[ A 10 [B C] D]:Noun => #[B *[A C] *[A D]]
 
     // Derived rules.
