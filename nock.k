@@ -94,7 +94,9 @@ module NOCK
     rule *[ A 5  B C]:Noun     => =[*[A B] *[A C]]
     rule *[ A 10 [B C] D]:Noun => #[B *[A C] *[A D]]
 
-    // Derived rules
+    // Derived rules.
+    // ==============
+
     // The rules for / lead to an infinite loop.
     // /[2 a] = /[(1 + 1)     a] => /[2 /[1 a]] => /[2 a] => ...
     // /[3 a] = /[(1 + 1 + 1) a] => /[3 /[1 a]] => /[3 a] => ...
