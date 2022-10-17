@@ -98,11 +98,13 @@ module NOCK
     // Derived rules.
     // ==============
 
-    // The rules for / lead to an infinite loop.
+    // These rules for / lead to an infinite loop.
+    // /[0 a] => /[2 /[0 a]] => /[2 /[2 /[0 a]]] => ...
     // /[2 a] = /[(1 + 1)     a] => /[2 /[1 a]] => /[2 a] => ...
     // /[3 a] = /[(1 + 1 + 1) a] => /[3 /[1 a]] => /[3 a] => ...
     // Note that the rules for /[2 A B] and /[3 A B] do *not* apply, not even in the writte nock spec.
-    rule /[2 _A:Int] => Bottom
-    rule /[3 _A:Int] => Bottom
+    rule /[0 _A:Noun] => Bottom
+    rule /[2 _A:Int]  => Bottom
+    rule /[3 _A:Int]  => Bottom
 
 endmodule
