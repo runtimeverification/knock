@@ -97,7 +97,7 @@ module NOCK
     rule *[A 7 B C]:Noun       => *[*[A B] C]
     rule *[A 8 B C]:Noun       => *[[*[A B] A] C]
     rule *[A 9 B C]:Noun       => *[*[A C] 2 [0 1] 0 B]
-    rule *[ A 10 [B C] D]:Noun => #[B *[A C] *[A D]]
+    rule *[A 10 [B C] D]:Noun  => #[B *[A C] *[A D]]
 
     // Derived rules.
     // ==============
