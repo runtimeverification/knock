@@ -3,7 +3,7 @@ K framework implementation of the [Nock virtual machine](https://developers.urbi
 ISSUES:
 
 - [ ] pre-parser fails for programs which already have right-association: `[subject 3 [1 2]]`
-- [ ] pre-parser fails for programs containing symbolic values other than `subject`: `[a 6 b c d]`
+- [x] pre-parser fails for programs containing symbolic values other than `subject`: `[a 6 b c d]`
 
 TODO:
 
