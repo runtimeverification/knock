@@ -8,6 +8,7 @@ module NOCK-SYNTAX
     syntax Noun ::= "subject" | "a" | "b" | "c" | "d"
 
 /*
+TODO: Separate these modules.
 endmodule
 
 module NOCK-ABSTRACT-SYNTAX
