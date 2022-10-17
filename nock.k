@@ -7,13 +7,10 @@ module NOCK-SYNTAX
     // For quick "symbolic" execution, placeholders
     syntax Noun ::= "subject" | "a" | "b" | "c" | "d"
 
-/*
-TODO: Separate these modules.
 endmodule
 
 module NOCK-ABSTRACT-SYNTAX
     import NOCK-SYNTAX
-*/
 
     syntax Nock ::= Noun | "[" Nock Nock "]" [seqstrict]
     syntax KResult ::= Noun
@@ -56,10 +53,10 @@ module NOCK-ABSTRACT-SYNTAX
 endmodule
 
 module NOCK
-    import NOCK-SYNTAX
+    import NOCK-ABSTRACT-SYNTAX
     import INT
 
-    configuration <k> nock($PGM:Nock) </k>
+    configuration <k> nock($PGM:Noun) </k>
 
     // When a nock tree has been fully evaluated, it is a noun.
     rule [NN:Noun NN':Noun]::Nock => [NN NN']::Noun
