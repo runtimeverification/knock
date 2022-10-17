@@ -22,9 +22,9 @@ def takeSymb(s):
     """Just a little hack for quick analysis: we allow the symbols "subject"
     and "a", "b", "c", and "d". """
     s = strip(s)
-    if len(s) > 7 and s[0:7] == 'subject':
+    if len(s) >= 7 and s[0:7] == 'subject':
         return ('subject', strip(s[7:]))
-    if len(s) > 1 and (s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd'):
+    if len(s) >= 1 and (s[0] == 'a' or s[0] == 'b' or s[0] == 'c' or s[0] == 'd'):
         return (s[0], strip(s[1:]))
     return (None, s)
 
@@ -85,7 +85,9 @@ def associate_right(l):
 inp_file = sys.argv[1]
 with open(inp_file) as f:
     inp = f.read()
-(res, s) = takeList(inp, mems_parser=orParser(takeInt, takeSymb))
+leafParser = orParser(takeInt, takeSymb)
+listParser = lambda x: takeList(x, mems_parser=leafParser)
+(res, s) = orParser(leafParser, listParser)(inp)
 if not s == '':
     print("Parse error:\nresult so far: %s\nremaining: %s" % (res, s))
 res = associate_right(res)
