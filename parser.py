@@ -78,9 +78,7 @@ def associate_right(l):
     if not isinstance(l, list):
         return l
     if len(l) == 1:
-        return l[0]
-    if len(l) == 2:
-        return l
+        return associate_right(l[0])
     return [associate_right(l[0]), associate_right(l[1:])]
 
 
