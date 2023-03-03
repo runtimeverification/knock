@@ -1,4 +1,4 @@
-module BASIC
+module BASIC-SPEC
     import NOCK
 
     claim [constant]: <k> nock([_:Noun 1 N:Noun]) => N ... </k> // Passes
