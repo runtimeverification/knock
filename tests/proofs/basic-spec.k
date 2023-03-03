@@ -30,7 +30,7 @@ module BASIC-SPEC
 
     claim [extend-3]: <k> // Passes
         *[[BODY:Noun 0 SUBJECT:Noun] 9 2 0 1]
-        => *[*[[BODY 0 SUBJECT] [0 1]] 2 [0 1] 0 2]
+        => *[*[[BODY 0 SUBJECT] 0 1] *[[BODY 0 SUBJECT] 0 2]]
         ... </k>
 
 endmodule
