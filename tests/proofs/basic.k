@@ -1,6 +1,10 @@
 module BASIC
     import NOCK
 
-    claim <k> nock([_:Noun 1 N:Noun]) => N ... </k> // Passes
+    claim [constant]: <k> nock([_:Noun 1 N:Noun]) => N ... </k> // Passes
+
+    claim [increment]: <k> nock([N:Int 4 0 1]) => N +Int 1 ... </k> // Passes
+
+    claim [extend]: <k> nock([SUBJECT [8 [1 0] G]]) => *[[0 SUBJECT] G] ... </k>
 
 endmodule
