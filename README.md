@@ -7,6 +7,7 @@ ISSUES:
 
 TODO:
 
+- [ ] set up prover
 - [x] pre-parser: insert explicit brackets to right-associate. `[1 2 3 4]` becomes `[1 [2 [3 [4]]]]`.
 - [x] syntax: remove list rules, keep macro rules for simpler rule writing.
 - [ ] ~~semantics: complete semantics with `anywhere` rules.~~
