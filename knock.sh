@@ -13,7 +13,7 @@ function prove {
     kompile nock.k --backend haskell
     input="$1"; shift
 
-    kprove $input "$@"
+    kprove $input "$@" --haskell-backend-command "kore-exec --disable-stuck-check"
 }
 
 run_command="$1" ; shift
