@@ -2,8 +2,8 @@ module DECREMENT-SPEC
     imports NOCK
 
     claim [decrement-concrete]: <k>
-        nock([2 [8 [1 0] 8 [1 6 [5 [0 7] 4 0 6] [0 6] 9 2 [0 2] [4 0 6] 0 7] 9 2 0 1]])
-        => 1
+        nock([2 ^Int 256 [8 [1 0] 8 [1 6 [5 [0 7] 4 0 6] [0 6] 9 2 [0 2] [4 0 6] 0 7] 9 2 0 1]])
+        => 2 ^Int 256 -Int 1
         ... </k>
 
     claim [decrement]: <k>
