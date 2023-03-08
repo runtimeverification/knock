@@ -5,7 +5,7 @@ set -euxo pipefail
 function run {
     kompile k-src/nock.k
     input="$1"; shift
-    python3 parser.py $input > $input.pre-parsed
+    python3 src/knock/parser.py $input > $input.pre-parsed
     krun $input.pre-parsed "$@"
 }
 
