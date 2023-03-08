@@ -1,15 +1,24 @@
 import sys
 
+from typing import Any, Callable, List, Optional, Tuple, TypeVar, Union
 
-def strip(s):
+T = TypeVar('T')
+T1 = TypeVar('T1')
+T2 = TypeVar('T2')
+
+ParseRes = Tuple[Optional[T], str]
+Parser = Callable[[str], ParseRes[T]]
+
+
+def strip(s: str) -> str:
     while len(s) > 0 and (s[0] == ' ' or s[0] == '\n'):
         s = s[1:]
     return s
 
 
-def or_parser(p1, p2):
+def or_parser(p1: Parser[T1], p2: Parser[T2]) -> Parser[Union[T1, T2]]:
     """Create a parser that accepts one of two parsers"""
-    def parse(s):
+    def parse(s: str) -> Tuple[Union[None, T1, T2], str]:
         strip(s)
         (res_temp, s_temp) = p1(s)
         if res_temp is None:
@@ -18,7 +27,7 @@ def or_parser(p1, p2):
     return parse
 
 
-def take_symb(s):
+def take_symb(s: str) -> ParseRes[str]:
     """Just a little hack for quick analysis: we allow the symbols "subject"
     and "a", "b", "c", and "d". """
     s = strip(s)
@@ -30,21 +39,21 @@ def take_symb(s):
 
 
 int_syms = '0123456789.'
-def take_int(s):
+def take_int(s: str) -> ParseRes[int]:
     s = strip(s)
-    res = ''
+    res_str = ''
     while len(s) > 0 and s[0] in int_syms:
-        res += s[0]
+        res_str += s[0]
         s = s[1:]
-    if res == '':
+    if res_str == '':
         res = None
     else:
-        res = int(res.replace('.', ''))
+        res = int(res_str.replace('.', ''))
     return (res, s)
 
 
-def take_list_of(mems_parser):
-    def take_list(s):
+def take_list_of(mems_parser: Parser) -> Parser[List]:
+    def take_list(s: str) -> ParseRes[List]:
         s = strip(s)
         if len(s) > 0 and s[0] == '[':
             res = []
@@ -68,7 +77,7 @@ def take_list_of(mems_parser):
     return take_list
 
 
-def associate_right(l):
+def associate_right(l: Any) -> Any:
     """Take a list of atoms and lists, and associate all the elements in it to the right, recursively.
     For example:
     [1 2 3 4] => [1 [2 [3 4]]]
