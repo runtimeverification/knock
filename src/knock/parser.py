@@ -19,7 +19,7 @@ def strip(s: str) -> str:
 def or_parser(p1: Parser[T1], p2: Parser[T2]) -> Parser[Union[T1, T2]]:
     """Create a parser that accepts one of two parsers"""
     def parse(s: str) -> Tuple[Union[None, T1, T2], str]:
-        strip(s)
+        s = strip(s)
         (res_temp, s_temp) = p1(s)
         if res_temp is None:
             return p2(s)
