@@ -7,18 +7,18 @@ def strip(s):
     return s
 
 
-def orParser(p1, p2):
+def or_parser(p1, p2):
     """Create a parser that accepts one of two parsers"""
     def parse(s):
         strip(s)
-        (resTemp, sTemp) = p1(s)
-        if resTemp is None:
+        (res_temp, s_temp) = p1(s)
+        if res_temp is None:
             return p2(s)
-        return (resTemp, sTemp)
+        return (res_temp, s_temp)
     return parse
 
 
-def takeSymb(s):
+def take_symb(s):
     """Just a little hack for quick analysis: we allow the symbols "subject"
     and "a", "b", "c", and "d". """
     s = strip(s)
@@ -30,7 +30,7 @@ def takeSymb(s):
 
 
 int_syms = '0123456789.'
-def takeInt(s):
+def take_int(s):
     s = strip(s)
     res = ''
     while len(s) > 0 and s[0] in int_syms:
@@ -43,21 +43,21 @@ def takeInt(s):
     return (res, s)
 
 
-def takeListOf(mems_parser):
-    def takeList(s):
+def take_list_of(mems_parser):
+    def take_list(s):
         s = strip(s)
         if len(s) > 0 and s[0] == '[':
             res = []
             s = s[1:]
             while True:
-                (resTmp, s) = mems_parser(s)
-                if resTmp is None:
-                    (lisRes, s) = takeList(s)
-                    if lisRes is None:
+                (tes_tmp, s) = mems_parser(s)
+                if tes_tmp is None:
+                    (lis_res, s) = take_list(s)
+                    if lis_res is None:
                         break
-                    res.append(lisRes)
+                    res.append(lis_res)
                 else:
-                    res.append(resTmp)
+                    res.append(tes_tmp)
         else:
             res = None
         s = strip(s)
@@ -65,7 +65,7 @@ def takeListOf(mems_parser):
             s = strip(s[1:])
 
         return (res, s)
-    return takeList
+    return take_list
 
 
 def associate_right(l):
@@ -85,9 +85,9 @@ def associate_right(l):
 inp_file = sys.argv[1]
 with open(inp_file) as f:
     inp = f.read()
-leafParser = orParser(takeInt, takeSymb)
-listParser = takeListOf(leafParser)
-(res, s) = orParser(leafParser, listParser)(inp)
+leaf_parser = or_parser(take_int, take_symb)
+list_parser = take_list_of(leaf_parser)
+(res, s) = or_parser(leaf_parser, list_parser)(inp)
 if not s == '':
     print("Parse error:\nresult so far: %s\nremaining: %s" % (res, s))
 res = associate_right(res)
