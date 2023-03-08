@@ -22,7 +22,7 @@ module NOCK-ABSTRACT-SYNTAX
                   | "/" Nock   [strict]
                   | "#" Nock   [strict]
                   | "*" Nock   [strict]
-                  | "Bottom"
+                  | Bottom(Int)
 
     // Sugar for writing rules.
     // This only helps with rule-writing.
@@ -76,7 +76,7 @@ module NOCK
     rule nock(A) => *A
     rule wut [_A _B]:Noun => 0 [priority(50)]
     rule wut _A:Noun      => 1 [priority(51)]
-    rule +[_A _B]:Noun    => Bottom
+    rule +[_A _B]:Noun    => Bottom(4)
     rule +A:Int           => A +Int 1
     rule =[ A  A]:Noun    => 0 [priority(50)]
     rule =[_A _B]:Noun    => 1 [priority(51)]
@@ -86,12 +86,12 @@ module NOCK
     rule /[3 _A  B]:Noun   => B [priority(50)]
     rule /[A' :Int B]:Noun => /[2 /[A'  /Int 2 B]] requires A'  modInt 2  ==Int 0 [priority(51)]
     rule /[A'':Int B]:Noun => /[3 /[A'' /Int 2 B]] requires A'' modInt 2 =/=Int 0 [priority(51)]
-    rule /_A:Noun          => Bottom [owise]
+    rule /_A:Noun          => Bottom(0) [owise]
 
     rule #[1 A _B]:Noun    => A [priority(50)]
     rule #[A' B C]:Noun    => #[A'  /Int 2 [B /[A' +Int 1 C]]  C] requires A'  modInt 2  ==Int 0 [priority(51)]
     rule #[A'' B C]:Noun   => #[A'' /Int 2 [/[A'' -Int 1 C] B] C] requires A'' modInt 2 =/=Int 0 [priority(51)]
-    rule #(_A:Noun)        => Bottom [owise] // TODO: Could this rule be removed? I can't think of a single way to reach this instruction. The hax Nock is always introduced by rule 10, which always gives two "arguments" in the tail. And we match on the first number being 1, or even, or odd. There are no more cases to be concerned with. The slot operator will reach Bottom in cases when the indicated location is not in the tree.
+    rule #(_A:Noun)        => Bottom(10) [owise] // TODO: Could this rule be removed? I can't think of a single way to reach this instruction. The hax Nock is always introduced by rule 10, which always gives two "arguments" in the tail. And we match on the first number being 1, or even, or odd. There are no more cases to be concerned with. The slot operator will reach Bottom in cases when the indicated location is not in the tree.
 
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
@@ -111,7 +111,7 @@ module NOCK
     rule *[A 11 [_B C] D]:Noun => *[[*[A C] *[A D]] 0 3]
     rule *[A 11 _B C]:Noun     => *[A C]
 
-    rule *_A => Bottom [owise]
+    rule *_A => Bottom(2) [owise]
 
     // Derived rules.
     // ==============
@@ -119,12 +119,12 @@ module NOCK
     // These rules for / lead to an infinite loop.
 
     // /[0 a] => /[2 /[0 a]] => /[2 /[2 /[0 a]]] => ...
-    rule /[0 _A:Noun] => Bottom [priority(50)]
+    rule /[0 _A:Noun] => Bottom(20) [priority(50)]
 
     // /[2 a] = /[(1 + 1)     a] => /[2 /[1 a]] => /[2 a] => ...
     // /[3 a] = /[(1 + 1 + 1) a] => /[3 /[1 a]] => /[3 a] => ...
     // Note that the rules for /[2 A B] and /[3 A B] do *not* apply, not even in the writte nock spec.
-    rule /[2 _A:Int]  => Bottom [priority(50)]
-    rule /[3 _A:Int]  => Bottom [priority(50)]
+    rule /[2 _A:Int]  => Bottom(22) [priority(50)]
+    rule /[3 _A:Int]  => Bottom(23) [priority(50)]
 
 endmodule
