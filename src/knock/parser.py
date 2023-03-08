@@ -89,8 +89,8 @@ leaf_parser = or_parser(take_int, take_symb)
 list_parser = take_list_of(leaf_parser)
 (res, s) = or_parser(leaf_parser, list_parser)(inp)
 if not s == '':
-    print("Parse error:\nresult so far: %s\nremaining: %s" % (res, s))
+    print('Parse error:\nresult so far: %s\nremaining: %s' % (res, s))
 res = associate_right(res)
 res = str(res).replace(',', '')  # we don't use commas to separate list items in nock.
-res = str(res).replace('\'', '') # remove string quotes.
+res = str(res).replace("'", '') # remove string quotes.
 print(res)
