@@ -9,6 +9,21 @@ ParseRes = Tuple[Optional[T], str]
 Parser = Callable[[str], ParseRes[T]]
 
 
+def main() -> None:
+    inp_file = sys.argv[1]
+    with open(inp_file) as f:
+        inp = f.read()
+    leaf_parser = or_parser(take_int, take_symb)
+    list_parser = take_list_of(leaf_parser)
+    (res, s) = or_parser(leaf_parser, list_parser)(inp)
+    if not s == '':
+        print('Parse error:\nresult so far: %s\nremaining: %s' % (res, s))
+    res = associate_right(res)
+    res = str(res).replace(',', '')  # we don't use commas to separate list items in nock
+    res = str(res).replace("'", '')  # remove string quotes
+    print(res)
+
+
 def strip(s: str) -> str:
     while len(s) > 0 and (s[0] == ' ' or s[0] == '\n'):
         s = s[1:]
@@ -95,15 +110,5 @@ def associate_right(l: Any) -> Any:
     return [associate_right(l[0]), associate_right(l[1:])]
 
 
-inp_file = sys.argv[1]
-with open(inp_file) as f:
-    inp = f.read()
-leaf_parser = or_parser(take_int, take_symb)
-list_parser = take_list_of(leaf_parser)
-(res, s) = or_parser(leaf_parser, list_parser)(inp)
-if not s == '':
-    print('Parse error:\nresult so far: %s\nremaining: %s' % (res, s))
-res = associate_right(res)
-res = str(res).replace(',', '')  # we don't use commas to separate list items in nock
-res = str(res).replace("'", '')  # remove string quotes
-print(res)
+if __name__ == '__main__':
+    main()
