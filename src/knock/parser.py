@@ -13,15 +13,20 @@ def main() -> None:
     inp_file = sys.argv[1]
     with open(inp_file) as f:
         inp = f.read()
+    res = preprocess(inp)
+    print(res)
+
+
+def preprocess(s: str) -> str:
     leaf_parser = or_parser(take_int, take_symb)
     list_parser = take_list_of(leaf_parser)
-    (res, s) = or_parser(leaf_parser, list_parser)(inp)
+    (res, s) = or_parser(leaf_parser, list_parser)(s)
     if not s == '':
-        print('Parse error:\nresult so far: %s\nremaining: %s' % (res, s))
+        raise ValueError(f'Parse error:\nresult so far: {res}\nremaining: {s}')
     res = associate_right(res)
     res = str(res).replace(',', '')  # we don't use commas to separate list items in nock
     res = str(res).replace("'", '')  # remove string quotes
-    print(res)
+    return res
 
 
 def strip(s: str) -> str:
