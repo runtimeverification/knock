@@ -1,6 +1,11 @@
-K framework implementation of the [Nock virtual machine](https://developers.urbit.org/reference/nock/definition).
+# knock
 
-# Installing
+K Framework implementation of the [Nock virtual machine](https://developers.urbit.org/reference/nock/definition).
+
+
+## Installation
+
+### Installing K
 
 It's easiest to install K and keep it up to date using the `kup` tool.
 
@@ -16,7 +21,24 @@ $ kup install k
 $ kprove --version
 ```
 
-# Running
+### Python Requirements
+
+Prerequsites: `python 3.8.*`, `pip >= 20.0.2`, `poetry >= 1.3.2`.
+
+
+## For Developers
+
+Use `make` to run common tasks (see the [Makefile](Makefile) for a complete list of available targets).
+
+* `make build`: Build wheel
+* `make check`: Check code style
+* `make format`: Format code
+* `make test-unit`: Run unit tests
+
+For interactive use, spawn a shell with `poetry shell` (after `poetry install`), then run an interpreter.
+
+
+## Running
 
 KNock accepts a single noun which already contains the subject and evaluates it.
 So for example, `tests/inc3.nock`:
@@ -44,7 +66,8 @@ $ ./knock.sh run tests/inc3.nock --depth 2
 </k>
 ```
 
-# Proving
+
+## Proving
 
 ```
 $ ./knock.sh prove tests/proofs/basic-spec.k
@@ -73,12 +96,14 @@ $ ./knock.sh prove tests/proofs/basic-spec.k --claims BASIC-SPEC.increment --dep
 rewritten further. See output for more details.
 ```
 
-# ISSUES:
+
+## ISSUES:
 
 - [x] pre-parser fails for programs which already have right-association: `[subject 3 [1 2]]`
 - [x] pre-parser fails for programs containing symbolic values other than `subject`: `[a 6 b c d]`
 
-# TODO:
+
+## TODO:
 
 - [x] set up prover
 - [x] pre-parser: insert explicit brackets to right-associate. `[1 2 3 4]` becomes `[1 [2 [3 [4]]]]`.

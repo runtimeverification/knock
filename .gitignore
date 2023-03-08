@@ -1,3 +1,7 @@
+/dist/
+__pycache__/
+.coverage
+
 *.pre-parsed
 *.kompile-*
 nock-kompiled
