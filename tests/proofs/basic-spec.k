@@ -17,11 +17,7 @@ module BASIC-SPEC
         nock([[1 SUBJ:Noun] 6 [0 2] _:Noun [7 [0 3] B:Noun]]) => *[SUBJ B]
         ... </k>
 
-     // TODO: This fails because it's finds an intermediate unification,
-     // assuming BODY == [9 2 0 1]
-     // If it just keeps executing, it would get to the exact right expression.
-     // It stops after 21 steps -- it should keep going to 50 steps.
-    claim [extend-2]: <k>
+    claim [extend-2]: <k> // Passes
         nock([SUBJECT:Noun [8 [1 0] [8 [1 BODY:Noun] 9 2 [0 1]]]])
         // If you execute to Bottom, depth 50, you will see the correct result.
      // => Bottom
