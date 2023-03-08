@@ -1,0 +1,12 @@
+[project]
+name = "knock"
+version = "0.1.0"
+source = "k-src/"
+
+[targets.haskell]
+backend = "haskell"
+main-file = "nock.k"
+
+[targets.llvm]
+backend = "llvm"
+main-file = "nock.k"
