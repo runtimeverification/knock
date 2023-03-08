@@ -29,6 +29,9 @@ pytest-cov = "*"
 pytest-mock = "*"
 pytest-xdist = "*"
 
+[tool.poetry.scripts]
+knock = "knock.__main__:main"
+
 [tool.isort]
 profile = "black"
 line_length = 120

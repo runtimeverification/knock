@@ -10,6 +10,7 @@ K Framework implementation of the [Nock virtual machine](https://developers.urbi
 It's easiest to install K and keep it up to date using the `kup` tool.
 
 Intall `kup`:
+
 ```
 $ bash <(curl https://kframework.org/install)
 ```
@@ -21,9 +22,14 @@ $ kup install k
 $ kprove --version
 ```
 
-### Python Requirements
+### Installing the `knock` Python Package
 
 Prerequsites: `python 3.8.*`, `pip >= 20.0.2`, `poetry >= 1.3.2`.
+
+```bash
+make build
+pip install dist/*.whl
+```
 
 
 ## For Developers
@@ -41,7 +47,7 @@ For interactive use, spawn a shell with `poetry shell` (after `poetry install`),
 ## Running
 
 KNock accepts a single noun which already contains the subject and evaluates it.
-So for example, `tests/inc3.nock`:
+So for example, `src/tests/test-data/inc3.nock`:
 
 ```
 [42 4 0 1]
@@ -50,7 +56,7 @@ So for example, `tests/inc3.nock`:
 Running:
 
 ```
-$ ./knock.sh run tests/inc3.nock
+$ knock run src/tests/test-data/inc3.nock
 <k>
   43 ~> .
 </k>
@@ -60,7 +66,7 @@ To only execute a few steps you can use the `--depth` flag, which will decide ho
 Not that these are steps in K, which are not exactly the same as number of Nock reductions.
 
 ```
-$ ./knock.sh run tests/inc3.nock --depth 2
+$ knock run src/tests/test-data/inc3.nock --depth 2
 <k>
   + * [ 42 [ 0 1 ] ] ~> .
 </k>
