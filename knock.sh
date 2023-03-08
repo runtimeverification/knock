@@ -3,14 +3,14 @@ set -euxo pipefail
 
 
 function run {
-    kompile nock.k
+    kompile k-src/nock.k
     input="$1"; shift
     python3 parser.py $input > $input.pre-parsed
     krun $input.pre-parsed "$@"
 }
 
 function prove {
-    kompile nock.k --backend haskell
+    kompile k-src/nock.k --backend haskell
     input="$1"; shift
 
     kprove $input "$@" --haskell-backend-command "kore-exec --disable-stuck-check"
