@@ -86,6 +86,9 @@ rewritten further. See output for more details.
 - [ ] ~~semantics: complete semantics with `anywhere` rules.~~
 - [x] semantics: implement semantics with ordered evaluation (could perhaps just use `strict` on rules for `/, #, *, +` etc. with `KResult ::= BaseNock` and `BaseNock ::= Int | "[" BaseNock BaseNock "]"`.
 - [ ] set up a test harness for all our tests
-- [ ] Do a `.*`-like implementation, where the subject is supplied together with a program.
-- [ ] Don't compile semantics every time, make a sensible build setup.
-- [ ] Set up KCFG
+- [ ] do a `.*`-like implementation, where the subject is supplied together with a program.
+- [ ] don't compile semantics every time, make a sensible build setup.
+- [ ] set up KCFG
+- [ ] proving help: highlight (with color if possible) the subject, command and tail for *[ubj X tail]. May be enough to always color code the (top level) head, second head, and tail
+- [ ] allow arbitrary length cells directly: use List or NeList and parse with macros
+- [ ] allow real nock integers: take 12.345.678 and automatically turn it into 12345678
