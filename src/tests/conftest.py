@@ -28,5 +28,10 @@ def llvm_dir(kbuild: KBuild, package: Package) -> Path:
 
 
 @pytest.fixture(scope='session')
-def knock(llvm_dir: Path) -> KNock:
-    return KNock(llvm_dir=llvm_dir)
+def haskell_dir(kbuild: KBuild, package: Package) -> Path:
+    return kbuild.kompile(package, 'haskell')
+
+
+@pytest.fixture(scope='session')
+def knock(llvm_dir: Path, haskell_dir: Path) -> KNock:
+    return KNock(llvm_dir=llvm_dir, haskell_dir=haskell_dir)

@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Final
 
 import pytest
 
@@ -6,8 +7,8 @@ from knock import KNock
 
 from ..utils import TEST_DATA_DIR
 
-RUN_FILES = tuple(TEST_DATA_DIR.glob('*.nock'))
-RUN_EXCLUDE = {'prog.nock'}
+RUN_FILES: Final = tuple(TEST_DATA_DIR.glob('*.nock'))
+RUN_EXCLUDE: Final = {'prog.nock'}
 
 
 @pytest.mark.parametrize('program_file', RUN_FILES, ids=[file.name for file in RUN_FILES])

@@ -76,25 +76,25 @@ $ knock run src/tests/test-data/inc3.nock --depth 2
 ## Proving
 
 ```
-$ ./knock.sh prove tests/proofs/basic-spec.k
+$ knock prove src/tests/test-data/proofs/basic-spec.k
 ```
 
 An example with a loop:
 
 ```
-$ ./knock.sh prove tests/proofs/decrement-spec.k
+$ knock prove src/tests/test-data/proofs/decrement-spec.k
 ```
 
 You can specify a claim with the `--claims` flag instead of running all claims in a file.
 
 ```
-$ ./knock.sh prove tests/proofs/basic-spec.k --claims BASIC-SPEC.increment,BASIC-SPEC.constant
+$ knock prove src/tests/test-data/proofs/basic-spec.k --claims BASIC-SPEC.increment,BASIC-SPEC.constant
 ```
 
 Once again, you can stop exectuion after some number of steps with `--depth`.
 
 ```
-$ ./knock.sh prove tests/proofs/basic-spec.k --claims BASIC-SPEC.increment --depth 2
+$ knock prove src/tests/test-data/proofs/basic-spec.k --claims BASIC-SPEC.increment --depth 2
 <k>
   + * [ N:Int [ 0 1 ] ] ~> _DotVar1 ~> .
 </k>
