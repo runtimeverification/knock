@@ -4,6 +4,7 @@ from tempfile import NamedTemporaryFile
 from typing import Iterable, Optional, Union, final
 
 from pyk.cli_utils import check_dir_path, check_file_path
+from pyk.ktool.kprint import KAstOutput, _kast
 from pyk.ktool.kprove import _kprove
 from pyk.ktool.krun import _krun
 
@@ -25,6 +26,34 @@ class KNock:
 
         object.__setattr__(self, 'llvm_dir', llvm_dir)
         object.__setattr__(self, 'haskell_dir', haskell_dir)
+
+    def parse(
+        self,
+        program_file: Union[str, Path],
+        *,
+        output: Optional[Union[str, KAstOutput]] = None,
+        temp_file: Optional[Union[str, Path]] = None,
+    ) -> str:
+        program_file = Path(program_file)
+        check_file_path(program_file)
+
+        if temp_file is not None:
+            temp_file = Path(temp_file)
+            return self._parse(program_file, output, temp_file)
+
+        with NamedTemporaryFile(mode='w') as f:
+            temp_file = Path(f.name)
+            return self._parse(program_file, output, temp_file)
+
+    def _parse(
+        self,
+        program_file: Path,
+        output: Optional[Union[str, KAstOutput]],
+        temp_file: Path,
+    ) -> str:
+        temp_file.write_text(preprocess(program_file.read_text()))
+        proc_res = _kast(file=temp_file, definition_dir=self.llvm_dir, output=output)
+        return proc_res.stdout
 
     def run(
         self,

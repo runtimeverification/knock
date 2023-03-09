@@ -4,6 +4,7 @@ from typing import Any, List, Optional
 
 from pyk.cli_utils import dir_path, file_path
 from pyk.kbuild import KBuild, Package
+from pyk.ktool.kprint import KAstOutput
 
 from . import KNock
 
@@ -11,14 +12,27 @@ from . import KNock
 def main() -> None:
     args = vars(_parse_args())
 
-    if args['command'] == 'run':
+    if args['command'] == 'parse':
+        exec_parse(**args)
+
+    elif args['command'] == 'run':
         exec_run(**args)
 
-    if args['command'] == 'prove':
+    elif args['command'] == 'prove':
         exec_prove(**args)
 
     else:
         raise AssertionError()
+
+
+def exec_parse(
+    program_file: Path,
+    output: Optional[KAstOutput],
+    **kwargs: Any,
+) -> None:
+    knock = _knock(**kwargs)
+    res = knock.parse(program_file, output=output)
+    print(res, end='')
 
 
 def exec_run(
@@ -71,6 +85,10 @@ def _parse_args() -> Namespace:
     parser.add_argument('--kbuild-dir', metavar='DIR', type=Path, help='path to HASKELL definition directory')
 
     command_parser = parser.add_subparsers(dest='command', metavar='COMMAND', required=True)
+
+    parse_parser = command_parser.add_parser('parse', help='parse Nock program')
+    parse_parser.add_argument('program_file', metavar='FILE', type=file_path, help='path to Nock program to parse')
+    parse_parser.add_argument('--output', metavar='OUTPUT', type=KAstOutput, help='output format')
 
     run_parser = command_parser.add_parser('run', help='run Nock program')
     run_parser.add_argument('program_file', metavar='FILE', type=file_path, help='path to Nock program to run')
