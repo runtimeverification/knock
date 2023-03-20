@@ -88,9 +88,13 @@ def _parse_args() -> Namespace:
 
     parse_parser = command_parser.add_parser('parse', help='parse Nock program')
     parse_parser.add_argument('program_file', metavar='FILE', type=file_path, help='path to Nock program to parse')
-    parse_parser.add_argument('--output', metavar='OUTPUT', type=KAstOutput,
-            default="json",
-            help='output format: pretty, program, kast, binary, json, kore, or none')
+    parse_parser.add_argument(
+        '--output',
+        metavar='OUTPUT',
+        type=KAstOutput,
+        default='json',
+        help='output format: pretty, program, kast, binary, json, kore, or none',
+    )
 
     run_parser = command_parser.add_parser('run', help='run Nock program')
     run_parser.add_argument('program_file', metavar='FILE', type=file_path, help='path to Nock program to run')
