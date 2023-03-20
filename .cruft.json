@@ -1,0 +1,18 @@
+{
+  "template": "https://github.com/runtimeverification/python-project-template.git",
+  "commit": "e51305c984afe6bfb51d212c1b8834bfe95fa8da",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "knock",
+      "project_slug": "knock",
+      "package_name": "knock",
+      "version": "0.1.0",
+      "description": "K Framework implementation of the Nock virtual machine",
+      "author_name": "Runtime Verification, Inc.",
+      "author_email": "contact@runtimeverification.com",
+      "_template": "https://github.com/runtimeverification/python-project-template.git"
+    }
+  },
+  "directory": null
+}
