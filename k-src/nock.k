@@ -91,8 +91,8 @@ module NOCK
     rule #[1 A _B]:Noun    => A [priority(50)]
     rule #[A' B C]:Noun    => #[A'  /Int 2 [B /[A' +Int 1 C]]  C] requires A'  modInt 2  ==Int 0 [priority(51)]
     rule #[A'' B C]:Noun   => #[A'' /Int 2 [/[A'' -Int 1 C] B] C] requires A'' modInt 2 =/=Int 0 [priority(51)]
-    rule #(_A:Noun)        => Bottom(10) [owise] // TODO: Could this rule be removed? I can't think of a single way to reach this instruction. The hax Nock is always introduced by rule 10, which always gives two "arguments" in the tail. And we match on the first number being 1, or even, or odd. There are no more cases to be concerned with. The slot operator will reach Bottom in cases when the indicated location is not in the tree.
-
+    rule #(_A:Noun)        => Bottom(10) [owise]
+    
     rule *[A [B C] D]:Noun => [*[A B C] *[A D]]
 
     rule *[ A 0  B]:Noun   => /[B A]
