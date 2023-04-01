@@ -15,7 +15,7 @@ module NOCK-ABSTRACT-SYNTAX
     syntax Nock ::= Noun | "[" Nock Nock "]" [seqstrict]
     syntax KResult ::= Noun
 
-    syntax Nock ::= nock(Nock)
+    syntax Nock ::= nock(Noun)
     syntax Nock ::= "wut" Nock [strict] // ? has significance in K, so we must replace it.
                   | "+" Nock   [strict]
                   | "=" Nock   [strict]
