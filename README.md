@@ -1,3 +1,5 @@
+![a fist on Mars, the knock logo](./knock_logo.png)
+
 # knock
 
 K Framework implementation of the [Nock virtual machine](https://developers.urbit.org/reference/nock/definition).
